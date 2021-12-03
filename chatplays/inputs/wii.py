@@ -1,0 +1,21 @@
+from directx import *
+
+# WII KEYS
+# Note: this controls D pad. Point and Swing is motion controls.
+WII_P1_UP = I
+WII_P1_DOWN = K
+WII_P1_LEFT = J
+WII_P1_RIGHT = L
+
+WII_P1_POINT_UP = UP_ARROW
+WII_P1_POINT_DOWN = DOWN_ARROW
+WII_P1_POINT_LEFT = LEFT_ARROW
+WII_P1_POINT_RIGHT = RIGHT_ARROW
+
+WII_P1_SWING_UP = W
+WII_P1_SWING_DOWN = S
+WII_P1_SWING_LEFT = A
+WII_P1_SWING_RIGHT = D
+
+WII_P1_A = X
+WII_P1_B = Z
