@@ -57,7 +57,7 @@ BASIC_COMMANDS = {
 }
 ```
 The phrases in `"quotation marks"` are the commands chat needs to enter, every thing left of the colon `:` is the python 'macro'
-command that will be ran. 
+command that will be ran. The command definitions of the right are lifted directly from `mouse_commands.py` 
 
 ### Super Basic Custom Command
 ```python
@@ -74,8 +74,21 @@ class CustomClick(Command):
         super().__init__(pyautogui.click, [])
 ```
 
+### Command Types and in-depth usage
+In the `command.py` file you can find all of the pre-defined command types. These are not pre-built helper commands, but
+are essentially template commands. 
+
+#### Command
+All command objects have two functions that are of interest. 
+
+* `execute()` which simply executes the command object.
+* `append()` appends another command to this command. Allows for command such as hold left and jump
+
+#### Chance Command
+A command that has an 1 in X chance of actually running. Contains all functionality as Command.
+
 ### Combining Multiple Sets of Commands
-Lets say that you have a small set of really command commands named `COMMON_COMMNDS`, and you have a set of game specific commands you want combine with them.
+Lets say that you have a small set of really common commands named `BASIC_COMMNDS`, and you have a set of game specific commands you want combine with them.
 Here's how you can do without redefining each command.
 ```python
 # BASIC_COMMANDS from above
@@ -90,5 +103,52 @@ GAME_SPECIFIC_COMMANDS = {
 COMBINED_COMMANDS = BASIC_COMMANDS | GAME_SPECIFIC_COMMANDS
 ```
 
-## TODO Building your own game command set
-Need to add this, but there is are working examples in `chatplays/games/`
+## Building your own game command set
+All 'Games' in BetterChatPlays are instances of `CommandSet`. CommandSet is the class that contains logic to process your 
+users commands and check if the command exists in the Map of commands.
+
+### Basic Game Command Set Foundation
+```python
+"""
+Defining the Basic set of commands for your Game
+"""
+BASIC_COMMANDS = {
+    "left": LEFT,
+    "right": RIGHT,
+    "up": UP,
+    "down": DOWN,
+    "light right": LIGHT_RIGHT,
+    "light left": LIGHT_LEFT,
+    "shoot": SHOOT_NOW
+}
+
+class GTASimple(CommandSet):
+    """
+    Basic command set, build a list of commands and the base class (CommandSet) will run them
+    """
+
+    @classmethod
+    def command_list(cls):
+        # No more if-else statements to write, just the name and the inputs you want to run.
+        # See command.py for a detailed explanation of how this works
+        return BASIC_COMMANDS
+
+# If you play the same game a lot with different commands, you can create multiple CommandSets in the same file
+class GTAModMenuControl(CommandSet):
+    """
+    Basic command set, build a list of commands and the base class (CommandSet) will run them
+    """
+
+    @classmethod
+    def command_list(cls):
+        # No more if-else statements to write, just the name and the inputs you want to run.
+        # See command.py for a detailed explanation of how this works
+        return MENU_COMMANDS
+```
+
+#### Command Set Types
+These are the underlying structures to every game that will be ran. 
+
+* `CommandSet` Basic CommandSet that all CommandSets extend from. Has a list to return the Commands to run, and functionality to process them
+* `CrewCommandSet` Inspired from DougDoug's A-Crew and Z-Crew battles. Has a command set for users in the first half of the Alphabet, and another for the second half.
+* `VIPCommandSet` Lets you define a specific set of users w/ their own set of commands
