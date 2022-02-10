@@ -1,4 +1,6 @@
 import ctypes
+import logging
+
 import pynput
 import time
 
@@ -9,6 +11,7 @@ SendInput = ctypes.windll.user32.SendInput
 # general windows applications) Instead, we use DirectX key codes and input functions below. This DirectX code is
 # partially sourced from: https://stackoverflow.com/questions/53643273/how-to-keep-pynput-and-ctypes-from-clashing
 
+LOGGER = logging.getLogger('chat_plays')
 
 def press_key_pynput(hex_key_code: hex):
     """

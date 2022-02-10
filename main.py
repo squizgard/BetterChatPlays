@@ -14,7 +14,7 @@ from chatplays.twitch.twitch_plays_account_info import TWITCH_USERNAME
 # game imports, keeps this file clean, create more command sets as you have twitch-chat play more stuff
 from chatplays.commandsets.command_set import CommandSet
 from chatplays.games.gta import GTASimple, GTACrewed, GTAVIPMode  # one game three-profiles!
-from chatplays.games.peggle import Peggle, VipPeggle
+from chatplays.games.vampire_survivors import VampireSurvivors
 
 
 from chatplays.inputs.directx import *
@@ -28,7 +28,7 @@ Load a game from chatplays.games.<yourgame> and set it in the init for ChatPlays
 
 MESSAGE_RATE = 0.5
 MAX_QUEUE_LENGTH = 20  # Note: setting to ~50 seems good for Mario Party. ~10 for platformers.
-MAX_WORKERS = 100
+MAX_WORKERS = 1
 thread_pool = concurrent.futures.ThreadPoolExecutor(max_workers=MAX_WORKERS)
 pyautogui.FAILSAFE = False
 
@@ -37,7 +37,7 @@ class ChatPlays:
     def __init__(self):
         self.logger = self.setup_custom_logger("chat_plays")
         # Set the game you want to play here, one line change once you have made a command set
-        self.game = VipPeggle()
+        self.game = VampireSurvivors()
 
     def main_loop(self):
         t = Twitch()
@@ -92,7 +92,7 @@ class ChatPlays:
 
         except Exception as e:
             traceback.print_tb()
-            self.logger.info("Encountered exception: " + str(e))
+            self.logger.exception("Encountered exception")
 
     @staticmethod
     def setup_custom_logger(name):
