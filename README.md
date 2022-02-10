@@ -56,7 +56,7 @@ BASIC_COMMANDS = {
     "shoot": SHOOT_NOW
 }
 ```
-The phrases in `"quotation marks"` are the commands chat needs to enter, every thing left of the colon `:` is the python 'macro'
+The phrases in `"quotation marks"` are the commands chat needs to enter, every thing to the right of the colon `:` is the python 'macro'
 command that will be ran. The command definitions of the right are lifted directly from `mouse_commands.py` 
 
 ### Super Basic Custom Command
